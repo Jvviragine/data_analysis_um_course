@@ -41,14 +41,12 @@ The idea is that we could predict of the options but knowing the others, which c
 Normally we would add a validation set for hyperparameter tuning. If we are building a simple linear regression model that might not be necessary. However, if we decide to use regularization, we might want to tune the parameter alpha.
 For a normal linear regression without regularization, there are no hyperparameters and we can even find the solution in a purely analytical way (Ordinary Least Squares)
 ### 2.1 D
-Note - the mean of 1 and std. of 0 come from the constant column that we added
-
+With Standardization, we get a Mean of 0 and Standard Deviation of 1. In the table, the values are not exactly 0 and 1 due to arithmetic precision.
 ### 2.1 E
 If we first standardize the data and then split, we might risk data leakage. That is because we are using information from the test set to scale the data. Instead we should first split the data and then standardize it using the train set statistics.
 We can also think from a practical point of view. A model in production, cannot use the "test set" to help it in the standardization, since it does not even have access to the test set. Therefore, we should always first split the data and then train the standardization on thr training and simply apply it to the test.
 ### 2.2.2
-We observe RMSE ~1451.95. To calcualte it, first we compute the errors for all predictions -> (actual price - model prediction). Next we square all the erors, which is helpful because it allows us to treat positive and negative values equally and is sometimes used to also punish bigger errors more. To compute the MSE, we simply compute the average of the squared errors. Lastly, taking the root of the MSE essentially brings our metric back to the original units. *In this case, we can say that for a given car, the predictions from our linear regression model on average will be about 1451 euros away from the actual price (could be underestimating or overestimating).*
-It is also interesting to point out that the RMSE is in the same units ad the Target Variable, which is useful for interpretation.
+We observe RMSE ~1451.95. To calcualte it, first we compute the errors for all predictions -> (actual price - model prediction). Next we square all the erors, which is helpful because it allows us to treat positive and negative values equally and is sometimes used to also punish bigger errors more. To compute the MSE, we simply compute the average of the squared errors. Lastly, taking the root of the MSE essentially brings our metric back to the original units, which makes the interpretation easier. *In this case, we can say that for a given car, the predictions from our linear regression model on average will be about 1451 euros away from the actual price (could be underestimating or overestimating).*
 ### 2.2.3
 R-squared on the test dataset is ~0.82. This values means that our model explain ~82% of the variance in car prices observed on the test set. (Note the value is slightly lower than the adjusted r-squared observed on the training data - 0.853). Generally we want r-squared values closer to 1 as this indicates good generalization on the test set.
 The fact that the r-squared between the Training and Testing was similar is a good sign, which generally means that the model is not overfitting the training data and is generalizing well.
@@ -73,17 +71,16 @@ Doors_5         x12          -10.0184    642.788     -0.016      0.988
 The 2 features with highest coefficients are Age and Weight. Age has a coef of ~-2090.6 which implies that for each additional year of a car's age, it's value depreciates by roughly 2090 euros. On the other hand, the coef for Weight is ~1199.5, which means that for each kilogram added, the value of a car rises by ~1199.5 euros.
 
 ### 2.3
-I think we could add the brand of the car although this is a categorical variable and it might increase the dimensionality considerably if we choose to use one-hot encoding. 
+
+A feature that could be interesting and is usually very much cosidered when buying a car is the general state of the car, for example, if there are scratches or dents or if the car has been in an accident before. This could be a boolean feature as well.
 Additionally, a boolean flag indicating whether the full service history is included or not could be beneficial
 to explaining the remaing variance. Also, we can add boolean features to indicate the presence of safety features such as ABS.
-A feature that could be interesting and is usually very much cosidered when buying a car is the general state of the car, for example, if there are scratches or dents or if the car has been in an accident before. This could be a boolean feature as well.
 
 
 ### 2.4
 A confounding variable that may be correlated with the car's weight and price is the 'body type'. For example, we have Hatchback which is usually smaller in size and weight and more affordable than other types.
-Then we have Sedans, which tend to be a bit bigger, offering sperate trunk space from the cabin, and thus they have mid-range prcies. Then there are SUVs which are bigger and boxier as well as more expensive than both Sedans and Hatchbacks. Lastly, there could also have the Minivan which is by far the heaviest and probably most expensive out of the 4 types mentioned.
+Then we have Sedans, which tend to be a bit bigger, offering sperate trunk space from the cabin, and thus they have mid-range prcies. Then there are SUVs which are bigger and boxier as well as more expensive than both Sedans and Hatchbacks. 
 
-One confounding variable would be the "Model" of the Corolla. This car has been around for many years and it changed quite dramatically in terms of size, materials, and just the general design. All of this impacts weight quite a lot.
 ### 2.5
 With the inverse mileage term the r-squared has increased slightly by 0.001,
 which means that we explain a bit more of the variance in car prices now. Additionally, we see that the inverser_mileage (x13) has p-value  of 0.006 which means that it is statistically significant at the 5% level.
