@@ -84,3 +84,17 @@ Then we have Sedans, which tend to be a bit bigger, offering sperate trunk space
 ### 2.5
 With the inverse mileage term the r-squared has increased slightly by 0.001,
 which means that we explain a bit more of the variance in car prices now. Additionally, we see that the inverser_mileage (x13) has p-value  of 0.006 which means that it is statistically significant at the 5% level.
+
+### 3.1
+880 sold within 3 months and 556 not.
+
+### 3.2.7
+We are predicting whether a car will be sold within the first 3 months or not.
+If we predict that the car will not be sold within the first 3 months we can discount the price. How can we ensure that we capture all the 0 classes such that we minimize the false positives (falsely think we will sell first 3 months but not the case in practice).
+
+1 = positive = sold <= 3 months
+0 = negative = sold > 3 months
+precision = tp / (tp + fp)
+recall = tp / (tp + fn)
+
+By increasing the threshold we would classify more samples as class 0 meaning decrease the false positives. This in turn will increase the false negatives but if we aim to maximize the cash flow and sell the cars as quickly as possible increasing the threshold that dictates whether the model thinks the car will be sold within the first 3 months or not could be beneficial.
