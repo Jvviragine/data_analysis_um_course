@@ -79,8 +79,30 @@ to explaining the remaing variance. Also, we can add boolean features to indicat
 
 ### 2.4
 A confounding variable that may be correlated with the car's weight and price is the 'body type'. For example, we have Hatchback which is usually smaller in size and weight and more affordable than other types.
-Then we have Sedans, which tend to be a bit bigger, offering sperate trunk space from the cabin, and thus they have mid-range prcies. Then there are SUVs which are bigger and boxier as well as more expensive than both Sedans and Hatchbacks. 
+Then we have Sedans, which tend to be a bit bigger, offering sperate trunk space from the cabin, and thus they have mid-range prcies. Then there are SUVs which are bigger and boxier as well as more expensive than both Sedans and Hatchbacks.
+
+Links that show different Toyota Corollas (Hatchback, Sedan, SUV, Wagon):
+
+- https://sunshinetoyota.com.au/blogdetails/which-toyota-corolla-is-right-for-you--a-look-at-the-hatch-vs--sedan/1658#:~:text=Corolla%20Hatchback%3A%20The%20hatch%20has,for%20a%20little%20extra%20flair.
+
+- https://newsroom.toyota.eu/toyota-announces-the-new-2023-corolla/
+
+- https://www.toyota.nl/modellen/corolla-touring-sports
 
 ### 2.5
 With the inverse mileage term the r-squared has increased slightly by 0.001,
 which means that we explain a bit more of the variance in car prices now. Additionally, we see that the inverser_mileage (x13) has p-value  of 0.006 which means that it is statistically significant at the 5% level.
+
+### 3.1
+880 sold within 3 months and 556 not.
+
+### 3.2.7
+We are predicting whether a car will be sold within the first 3 months or not.
+If we predict that the car will not be sold within the first 3 months we can discount the price. How can we ensure that we capture all the 0 classes such that we minimize the false positives (falsely think we will sell first 3 months but not the case in practice).
+
+1 = positive = sold <= 3 months
+0 = negative = sold > 3 months
+precision = tp / (tp + fp)
+recall = tp / (tp + fn)
+
+By increasing the threshold we would classify more samples as class 0 meaning decrease the false positives. This in turn will increase the false negatives but if we aim to maximize the cash flow and sell the cars as quickly as possible increasing the threshold that dictates whether the model thinks the car will be sold within the first 3 months or not could be beneficial.
