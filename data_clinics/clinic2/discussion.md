@@ -79,7 +79,15 @@ to explaining the remaing variance. Also, we can add boolean features to indicat
 
 ### 2.4
 A confounding variable that may be correlated with the car's weight and price is the 'body type'. For example, we have Hatchback which is usually smaller in size and weight and more affordable than other types.
-Then we have Sedans, which tend to be a bit bigger, offering sperate trunk space from the cabin, and thus they have mid-range prcies. Then there are SUVs which are bigger and boxier as well as more expensive than both Sedans and Hatchbacks. 
+Then we have Sedans, which tend to be a bit bigger, offering sperate trunk space from the cabin, and thus they have mid-range prcies. Then there are SUVs which are bigger and boxier as well as more expensive than both Sedans and Hatchbacks.
+
+Links that show different Toyota Corollas (Hatchback, Sedan, SUV, Wagon):
+
+- https://sunshinetoyota.com.au/blogdetails/which-toyota-corolla-is-right-for-you--a-look-at-the-hatch-vs--sedan/1658#:~:text=Corolla%20Hatchback%3A%20The%20hatch%20has,for%20a%20little%20extra%20flair.
+
+- https://newsroom.toyota.eu/toyota-announces-the-new-2023-corolla/
+
+- https://www.toyota.nl/modellen/corolla-touring-sports
 
 ### 2.5
 With the inverse mileage term the r-squared has increased slightly by 0.001,
