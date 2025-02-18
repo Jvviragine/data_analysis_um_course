@@ -106,3 +106,46 @@ precision = tp / (tp + fp)
 recall = tp / (tp + fn)
 
 By increasing the threshold we would classify more samples as class 0 meaning decrease the false positives. This in turn will increase the false negatives but if we aim to maximize the cash flow and sell the cars as quickly as possible increasing the threshold that dictates whether the model thinks the car will be sold within the first 3 months or not could be beneficial.
+
+ If we increase the threshold increases the precision because we have more confidence when predicting the positive class. In turn, this will decreases the recall because the model is less likely to predict positive outcomes.
+
+ ### 3.2.8
+ Used link for testing multiple thresholds: https://stackoverflow.com/questions/28716241/controlling-the-threshold-in-logistic-regression-in-scikit-learn
+
+Note that the binary search implementation only gives us a heuristic and is not guaranteed to find the optimal f1 score - that is because binary search works well with monotonic functions. In our case it found a thrshold that is very close to the optimum.
+
+An interesting observation came from the fact that the optimal threshold for the training data was about 0.56, so prioritizing higher precision at the cost of recall. While the optimal threshold for the testing set was about 0.45. I thought that this might because of the class distribution but in the training set we have ~61% class 1 instances and in the test set we have ~60% class 1 instances, so the difference does not seem substantial.
+
+### 3.3.2 
+For the random forest classifier I chose the following parameters somewhat arbitrarily:
+n_estimators=200, max_depth=5, min_samples_split=10, min_samples_leaf=3, max_features=5, bootstrap=False, random_state=42
+
+### 3.3.3
+I added the confusion matrix matrix on the test set of the the random forst classifier.
+If we were to compare with the logistic regression model, using the best threshold that was obtained on the training set:
+ ******** For threshold = 0.56 ******
+Accuracy: 0.9340277777777778
+Precision: 0.9378531073446328
+Recall: 0.9540229885057471
+F1 score: 0.9458689458689458
+Confusion matrix:
+ [[103  11]
+ [  8 166]]
+
+We can see that the models are quite close in terms of performance:
+accuracy: 0.9305555555555556
+precision: 0.9325842696629213
+recall: 0.9540229885057471
+f1: 0.9431818181818182
+[[102  12]
+ [  8 166]]
+
+The difference comes from 1 misclassified instance.
+
+Additionally, a feature importance plot is created which illustrates that price, age, km & weight are our most important features.
+
+Lastly, I added ROC curve comparison between the 2 models, and we can see that they have very similar performance.
+
+### 3.3.4
+
+Two grid searches were attempted - one was more broad and the other more focused. The broader search aimer to identify promising regions in the hyperparameter space and thus was more computationally expensive. Once promising ranges were identified, a nire ficysed grid search was performed to fine-tune the most promising parameter combinations. The process used 5-fold cross validation
