@@ -119,7 +119,16 @@ For the random forest classifier I chose the following parameters somewhat arbit
 n_estimators=200, max_depth=5, min_samples_split=10, min_samples_leaf=3, max_features=5, bootstrap=False, random_state=42
 
 ### 3.3.3
-I added the confusion matrix matrix on the test set of the the random forst classifier.
+Firstly, we want to explore the problem in terms of classification complexity by looking at the distribution of cars in the Age-Price space, which indicated that while the classes are mostly seperable, there is some overlap between them.
+
+Next we wanted a more detailed picture so we plotted all pairwise relationships between our numerical features such that we can observe class seperation between different feature combinations.
+
+Lastly, included PCA on the scaled training data. We created a scatter plot with pairwise comparison of the first 3 principle compoents, clored by whether the sample is class 0 or 1.
+
+This analysis helped us understand where the decision boundaries are located. Furthermore, we gained insights into the problem difficulty and were able to understand why even base models can obtain relatively high scores on accuracy, precision and recall.
+
+For the Random Forest Classifier
+Added the confusion matrix matrix on the test set of the the random forest classifier.
 If we were to compare with the logistic regression model, using the best threshold that was obtained on the training set:
  ******** For threshold = 0.56 ******
 Accuracy: 0.9340277777777778
@@ -142,8 +151,9 @@ The difference comes from 1 misclassified instance.
 
 Additionally, a feature importance plot is created which illustrates that price, age, km & weight are our most important features.
 
-Lastly, I added ROC curve comparison between the 2 models, and we can see that they have very similar performance.
+Added ROC curve comparison between the 2 models, and we can see that they have very similar performance.
 
 ### 3.3.4
 
-Two grid searches were attempted - one was more broad and the other more focused. The broader search aimer to identify promising regions in the hyperparameter space and thus was more computationally expensive. Once promising ranges were identified, a nire ficysed grid search was performed to fine-tune the most promising parameter combinations. The process used 5-fold cross validation
+Random forest classifier:
+Two grid searches were attempted to optimize the model- one was more broad and the other more focused. The broader search aimed to identify promising regions in the hyperparameter space and thus was more computationally expensive. Once promising ranges were identified, another focused grid search was performed to fine-tune the most promising parameter combinations. The process used 5-fold cross validation, meaning that for each combination of hyperparameters in the grid, the model we chose was trained on 4 folds and validated on the remaining fold, then the process is repeated 5 times so that each fold serves as a validation set and the F1 scores are averaged across the validation sets.
