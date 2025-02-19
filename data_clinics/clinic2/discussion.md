@@ -97,17 +97,15 @@ which means that we explain a bit more of the variance in car prices now. Additi
 880 sold within 3 months and 556 not.
 
 ### 3.2.7
-We are predicting whether a car will be sold within the first 3 months or not.
-If we predict that the car will not be sold within the first 3 months we can discount the price. How can we ensure that we capture all the 0 classes such that we minimize the false positives (falsely think we will sell first 3 months but not the case in practice).
-
 1 = positive = sold <= 3 months
 0 = negative = sold > 3 months
-precision = tp / (tp + fp)
-recall = tp / (tp + fn)
 
-By increasing the threshold we would classify more samples as class 0 meaning decrease the false positives. This in turn will increase the false negatives but if we aim to maximize the cash flow and sell the cars as quickly as possible increasing the threshold that dictates whether the model thinks the car will be sold within the first 3 months or not could be beneficial.
+e are predicting whether a car will be sold within the first 3 months or not. How can we ensure that we capture all the cars that will not be sold within 3 months such that we minimize the false positives (falsely think we will sell first 3 months but not the case in practice). Conversely, this is also a question of how do we maximize the probability of predicting sold within 3 months correctly such that we have higher confidence when assigning the positive class.
 
- If we increase the threshold increases the precision because we have more confidence when predicting the positive class. In turn, this will decreases the recall because the model is less likely to predict positive outcomes.
+By increasing the threshold we would classify more samples as class 0 meaning decrease the false positives, meaning we would have better precision. This in turn will increase the false negatives (worse recall) but if we aim to maximize the cash flow and sell the cars as quickly as possible increasing the threshold that dictates whether the model thinks the car will be sold within the first 3 months or not could be beneficial.
+
+If we increase the threshold this increases the precision because we have more confidence when predicting the positive class. In turn, the recall is decreased because the model is less likely to predict positive outcomes.
+Vice versa, if we decrease the threshold the precision decreases and recall increases.
 
  ### 3.2.8
  Used link for testing multiple thresholds: https://stackoverflow.com/questions/28716241/controlling-the-threshold-in-logistic-regression-in-scikit-learn
