@@ -100,7 +100,7 @@ which means that we explain a bit more of the variance in car prices now. Additi
 1 = positive = sold <= 3 months
 0 = negative = sold > 3 months
 
-e are predicting whether a car will be sold within the first 3 months or not. How can we ensure that we capture all the cars that will not be sold within 3 months such that we minimize the false positives (falsely think we will sell first 3 months but not the case in practice). Conversely, this is also a question of how do we maximize the probability of predicting sold within 3 months correctly such that we have higher confidence when assigning the positive class.
+We are predicting whether a car will be sold within the first 3 months or not. How can we ensure that we capture all the cars that will not be sold within 3 months such that we minimize the false positives (falsely think we will sell first 3 months but not the case in practice). Conversely, this is also a question of how do we maximize the probability of predicting sold within 3 months correctly such that we have higher confidence when assigning the positive class.
 
 By increasing the threshold we would classify more samples as class 0 meaning decrease the false positives, meaning we would have better precision. This in turn will increase the false negatives (worse recall) but if we aim to maximize the cash flow and sell the cars as quickly as possible increasing the threshold that dictates whether the model thinks the car will be sold within the first 3 months or not could be beneficial.
 
