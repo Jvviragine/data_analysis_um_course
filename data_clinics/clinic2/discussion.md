@@ -9,7 +9,7 @@ Problem with following row:
 -wrong delimiter is used
 
 ### 1.3
-Probelm the dtype of "Price" is Object
+Problem the dtype of "Price" is Object
 Reason:
 28 cases with "":
 most are in this format:  
