@@ -38,13 +38,25 @@ Here we notice some interesting facts. The first one is that by looking at the A
 - An important observation is that I fixed the random seed across my entire notebook, otherwise we were always getting a different data split and a different logistic regression model.
 - Another observation is that our model always says very close to the random model line (y = x), which shows in a visial manner what we had already seem numerically, namely that our model has almost zero discrimnation power between the classes.
 - Moreover, we see that the numbers inside the little rectangles corresponds to the different thresholds used by the model. We see how it can only classify a few instances in the minority classes by using extremely low thresholds, which is not a good sign at all, since, if we take a probabilistic interpretation of the scores output by Logistic Regression, we would be essentially saying that if the model gives like a 2% probability of being in the minority class, we should classify it as minority class, which is a very low confidence to base decisions upon.
+
+- Niki Response (to merge):
+I created the respective ROC curves for the logistic regression model where the income column is dropped and the logistic regression model where rows containing NaN values are removed. Both models perform the train test split with random state = 42 for reproducability. In both models we can see that due to the majority class bias we need to use thresholds that are very close to 0 in order to to improve the true positive rate, which makes sense. In addition, for the model where the income column is dropped we have AUC = 0.73, which is better than random but but suggests that there is room for improvement. On the other hand, the model that has rows with NaN values removed has AUC = 0.58, which is only slightly better than random and suggests poor predictive power. The difference in performance suggests that simply dropping rows with NaN values is not a good strategy as it leads to loss of valuable information. Those finding suggest that we should consider imputation techniques rather than attempting to remove columns or rows containing NaNs. 
+
 ## Question 6 (6 pts)
 - Interesting to see that the Income Distribution after Imputation now has a huge bump in the value that was the older mean, since many samples were imputed with those.
+
+- Niki Response (to merge):
+The calculated mean is ~15633. Since we were able to identify 588 missing values, those were replaced with the calculated mean. This change is clearly reflected in the income distribution visible on the histogram as the bin corresponding to income of ~15,000 jumps from ~100 to ~700 entries.
+
 ## Question 7 (4 pts)
 - First observation that we see is that our AUC improved from around 0.6 to 0.71, which shows that our model improved in being able to distinguish between the 2 classes.
 - Visually this can also be clearly seem by the fact that the ROC curve of our model is further away from the random classifier, which is also a good sign (numerically this translates to a bigger AUC).
 - Moreover, another interesting fact is that now our model is already able to classify some minority classes with a much bigger threshold (starting at 0.26, while before the biggest was 0.02).
 - The increase in performance is very likely due to the fact that now we did not delete the biggest part of the minority samples, but rather imputted with the mean (which I am not suure if it helped, but at least allowed us to not exclude the majority of the minority class, meaning that the model can actually learn something from it.)
+
+- Niki Response (to merge):
+For this model where we use mean value imputation we have AUC = 0.71. This is considerably better than the model where NaN rows are removed. However, there is still more left to be desired as this performance is comparable with the model where the income column was dropped (AUC = 0.73). While mean value imputation helps us preserve the original sample size, we see that in this case it does not offer us much in terms of performance, likely due to the fact that the relationship of income with the other columns is not taken into account. Also, the mean imputation might not be ideal in our case as we have a right-skewed distribution and taking the mean can introduce further bias, thus not capturing the true information of the missing values. While, mean imputation is simple to apply, we should consider more sophisticated techniques in this case like MICE (Multivariate Imputation by Chained Equations).
+
 ## Question 8 (8 pts)
 - Now, by using the Linear Imputation, the performance has actually decreased compared with the simple Mean Imputation (from AUC of 0.71 to 0.66). However, it's still performing better than just dropping the records with NaN (AUC of 0.6)
 - This method was much more work to make it work, since we essentially have to train a model to predict the missing values which is then used to impute the missing values and then, another model is trained on top of that
@@ -52,8 +64,48 @@ Here we notice some interesting facts. The first one is that by looking at the A
 - One reason why the mean worked better could be because, perhaps, the Income is not linearly dependent with the other features, so a linear gression without any transformations in these features could be innapropriate (just a guess)
 
 ## Question 9 (4 pts)
+The AUC score I acheived in this part is AUC = 0.71. This was surprising to me as I expected that a linear regression imputation would improve our classification performance. What that indicates is that linear regression might not be able to capture the relationsships between income and other variables. Additionally, the models might be hitting a ceiling due to the class imbalance problem that we have not addressed.
 
 # Part 3
 - regularize with cross-validation
 ## Question 10 - improve the model (15 pts)
 
+## Question 10 - improve the model (15 pts)
+
+To address the challenges of class imbalance and improve model performance, I implemented several approaches:
+
+ - 1. Regularized Logistic Regression with Cross-Validation
+
+I applied regularization to the logistic regression model using GridSearchCV to find the optimal values for the regularization parameter C and class weights. Cross-validation with 5 folds was used to prevent overfitting. The best model achieved an AUC of 0.71, with optimal parameters  {'C': 0.01, 'class_weight': None}.
+
+ - 2. Decision Tree Classifier
+
+Decision trees offer a different modeling approach that can sometimes perform well on imbalanced datasets. I tuned hyperparameters including max_depth, min_samples_split, and min_samples_leaf to find the optimal tree structure. The best decision tree model achieved an AUC of 0.77.
+
+The decision tree showed better performance compared to logistic regression, likely due to its ability to create non-linear decision boundaries.
+
+ - 3. Random Forest Classifier
+
+Random forests, as ensemble models, often perform better than single decision trees by reducing variance. I optimized the hyperparameters including n_estimators, max_depth, and class_weight. The best random forest model achieved an AUC of ~0.78.
+
+The random forest showed slightly improved performance compared to the previous models.
+
+ - 4. Handling Class Imbalance with SMOTE
+
+To directly address the class imbalance issue, I applied the Synthetic Minority Over-sampling Technique (SMOTE) to generate synthetic examples of the minority class. When combined with the best performing random forest model, this approach achieved an AUC of 0.80.
+
+The SMOTE + Random Forest combination did improve performance over the standard Random Forest, suggesting that the synthetic examples helped the model better learn the minority class patterns.
+
+- Conclusion
+
+Among all models tested, SMOTE + Random Forest performed best with an AUC of 0.80. 
+
+From the feature importance analysis, we can see that income and education are the most predictive features for identifying individuals with poor health. 
+
+
+While the model's performance improved compared to our initial models, there is still room for improvement, potentially through:
+
+1. Collecting more data, especially for the minority class
+2. Exploring more sophisticated ensemble methods
+3. Applying more advanced resampling techniques
+ 
