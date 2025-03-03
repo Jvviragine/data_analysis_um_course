@@ -39,7 +39,12 @@ Here we notice some interesting facts. The first one is that by looking at the A
 - Another observation is that our model always says very close to the random model line (y = x), which shows in a visial manner what we had already seem numerically, namely that our model has almost zero discrimnation power between the classes.
 - Moreover, we see that the numbers inside the little rectangles corresponds to the different thresholds used by the model. We see how it can only classify a few instances in the minority classes by using extremely low thresholds, which is not a good sign at all, since, if we take a probabilistic interpretation of the scores output by Logistic Regression, we would be essentially saying that if the model gives like a 2% probability of being in the minority class, we should classify it as minority class, which is a very low confidence to base decisions upon.
 ## Question 6 (6 pts)
+- Interesting to see that the Income Distribution after Imputation now has a huge bump in the value that was the older mean, since many samples were imputed with those.
 ## Question 7 (4 pts)
+- First observation that we see is that our AUC improved from around 0.6 to 0.71, which shows that our model improved in being able to distinguish between the 2 classes.
+- Visually this can also be clearly seem by the fact that the ROC curve of our model is further away from the random classifier, which is also a good sign (numerically this translates to a bigger AUC).
+- Moreover, another interesting fact is that now our model is already able to classify some minority classes with a much bigger threshold (starting at 0.26, while before the biggest was 0.02).
+- The increase in performance is very likely due to the fact that now we did not delete the biggest part of the minority samples, but rather imputted with the mean (which I am not suure if it helped, but at least allowed us to not exclude the majority of the minority class, meaning that the model can actually learn something from it.)
 ## Question 8 (8 pts)
 ## Question 9 (4 pts)
 
