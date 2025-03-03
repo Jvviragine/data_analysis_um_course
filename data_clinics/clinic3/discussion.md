@@ -90,7 +90,7 @@ The random forest showed slightly improved performance compared to the previous 
 
  - 4. Handling Class Imbalance with SMOTE
 
-To directly address the class imbalance issue, I applied the Synthetic Minority Over-sampling Technique (SMOTE) to generate synthetic examples of the minority class. When combined with the best performing random forest model, this approach achieved an AUC of 0.80.
+To directly address the class imbalance issue, I applied the Synthetic Minority Over-sampling Technique (SMOTE) to generate synthetic examples of the minority class. To put it simply, what SMOTE does is tat instead of simply duplicating points from the minority class, it picks points in the minority class, finds neighbours, and essentially creates blends from these points, so as to have more "naturally looking points". It does this until the classes are balanced. Therefore, instead of simply doing oversampling by duplicating minority class points, it creates synthetic points that are close to the original ones. When combined with the best performing random forest model, this approach achieved an AUC of 0.80.
 
 The SMOTE + Random Forest combination did improve performance over the standard Random Forest, suggesting that the synthetic examples helped the model better learn the minority class patterns.
 
@@ -106,4 +106,7 @@ While the model's performance improved compared to our initial models, there is 
 1. Collecting more data, especially for the minority class
 2. Exploring more sophisticated ensemble methods
 3. Applying more advanced resampling techniques
+4. Use different class weights within the model, so as to try to compensate for the imbalance in the dataset.
+5. Understand better how to impute a value that makes sense for the missing values in Income. Perhaps, something more aligned with domain experts or try to predict the missing values with a model that can handle better non-linear relationships between the features.
+6. Understand better what is the relative cost of misclassify a sample from the minority class. With this, we could apply weights to the sample in a more realistic sense, so as to make the model learn better from the minority class.
  
