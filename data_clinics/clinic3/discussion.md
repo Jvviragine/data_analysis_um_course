@@ -46,6 +46,11 @@ Here we notice some interesting facts. The first one is that by looking at the A
 - Moreover, another interesting fact is that now our model is already able to classify some minority classes with a much bigger threshold (starting at 0.26, while before the biggest was 0.02).
 - The increase in performance is very likely due to the fact that now we did not delete the biggest part of the minority samples, but rather imputted with the mean (which I am not suure if it helped, but at least allowed us to not exclude the majority of the minority class, meaning that the model can actually learn something from it.)
 ## Question 8 (8 pts)
+- Now, by using the Linear Imputation, the performance has actually decreased compared with the simple Mean Imputation (from AUC of 0.71 to 0.66). However, it's still performing better than just dropping the records with NaN (AUC of 0.6)
+- This method was much more work to make it work, since we essentially have to train a model to predict the missing values which is then used to impute the missing values and then, another model is trained on top of that
+- We are still not able to classify the minority class well, however, we do better than just dropping the missing values.
+- One reason why the mean worked better could be because, perhaps, the Income is not linearly dependent with the other features, so a linear gression without any transformations in these features could be innapropriate (just a guess)
+
 ## Question 9 (4 pts)
 
 # Part 3
