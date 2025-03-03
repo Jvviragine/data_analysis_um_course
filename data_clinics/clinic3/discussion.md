@@ -30,10 +30,14 @@ The confusion matrix shows this very clearly. We see how everyone who was in poo
 
 ## Question 4 (4 pts)
 We see an accuracy of 98%, howerver, as discussed earlier, accuracy alone is not very indicative of how good the performance of the model is. The first logistic regression model we built also had high accuracy, while being biased towards the majority class and never predicting the positive outcome. In addition, earlier we saw that there were only 2% 'poor hearlth' individuals in our dataset after removing NaN values, therefore, it is possible to achieve 98% accuracy by just predicting the negative class.
+Indeed, for this model, this is precisely the case, where we get a high accuracy by just predicting the majority class. In fact, we were not able to predict any of the minority class instances (we can see this by the 0% precision, 0% recall and 0% f1 we obtain for both training and testing)
+
 
 ## Question 5 (4 pts)
-I created 
-
+Here we notice some interesting facts. The first one is that by looking at the AUC, we see that the model is doing better than a random classifier (which has AUC of 0.5). 
+- An important observation is that I fixed the random seed across my entire notebook, otherwise we were always getting a different data split and a different logistic regression model.
+- Another observation is that our model always says very close to the random model line (y = x), which shows in a visial manner what we had already seem numerically, namely that our model has almost zero discrimnation power between the classes.
+- Moreover, we see that the numbers inside the little rectangles corresponds to the different thresholds used by the model. We see how it can only classify a few instances in the minority classes by using extremely low thresholds, which is not a good sign at all, since, if we take a probabilistic interpretation of the scores output by Logistic Regression, we would be essentially saying that if the model gives like a 2% probability of being in the minority class, we should classify it as minority class, which is a very low confidence to base decisions upon.
 ## Question 6 (6 pts)
 ## Question 7 (4 pts)
 ## Question 8 (8 pts)
